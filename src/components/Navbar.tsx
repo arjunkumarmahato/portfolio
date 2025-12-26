@@ -12,12 +12,12 @@ const NavWrapper = styled.nav<{ $visible: boolean }>`
   top: 0;
   left: 0;
   width: 100%;
-  padding: 1rem;
+  padding: 0.8rem; /* Mobile Compact Padding */
   
   /* Mobile First: Stack Layout */
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1rem;
+  gap: 0.5rem;
   background-color: rgba(232, 235, 228, 0.9);
   backdrop-filter: blur(10px);
   
@@ -58,7 +58,7 @@ const NavLinks = styled.div`
   background-color: transparent;
   padding: 0;
   border: none;
-  gap: 0.8rem;
+  gap: 0.5rem; /* Reduced Gap for 360px */
   flex-wrap: wrap;
   justify-content: center;
 

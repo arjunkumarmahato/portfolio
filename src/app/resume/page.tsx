@@ -10,6 +10,7 @@ const PageContainer = styled.main`
   min-height: 100vh;
   background-color: var(--satin-linen);
   color: var(--noir-black);
+  padding: 8rem 1.5rem 4rem;
 
   @media (min-width: 769px) {
      padding: 10rem 2rem 4rem; /* Desktop: More breathability */

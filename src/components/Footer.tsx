@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 
 const FooterWrapper = styled.footer<{ $hidden: boolean }>`
   background-color: var(--satin-linen);
-  padding: 1rem; /* Base Mobile Padding */
+  padding: 0.5rem; /* Reduced Mobile Padding */
   display: ${(props) => (props.$hidden ? "none" : "block")};
   color: var(--noir-black);
   
@@ -33,16 +33,21 @@ const BentoGrid = styled.div`
 `;
 
 // Base Bento Box Style - LIGHT THEME
+// Base Bento Box Style - LIGHT THEME
 const BentoBox = styled.div`
   background-color: transparent;
   color: var(--noir-black);
-  padding: 2rem;
+  padding: 1.5rem; /* Mobile Compact Padding */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  
+  @media (min-width: 769px) {
+    padding: 2rem;
+  }
   
   &:hover {
     transform: translateY(-5px);
@@ -71,7 +76,7 @@ const CtaLabel = styled.span`
 
 const BigText = styled.h2`
   font-family: "Monoska", sans-serif;
-  font-size: 3rem; /* Mobile: Scaled down */
+  font-size: 11vw; /* Mobile Responsive: Fits without overflow */
   text-transform: uppercase;
   line-height: 0.85;
   margin: 0;
