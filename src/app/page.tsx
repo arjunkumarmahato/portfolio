@@ -1,66 +1,55 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
 
-export default function Home() {
+import styled from "styled-components";
+import { useRef, useState } from "react";
+import gsap from "gsap";
+import Loader from "@/components/Loader";
+import Home, { HomeHandle } from "@/components/Home";
+import Ticker from "@/components/Ticker";
+import FolderGallery from "@/components/FolderGallery";
+import { CustomEase } from "gsap/all";
+
+// Register GSAP plugins
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(CustomEase);
+  CustomEase.create("hop", "0.9, 0, 0.1, 1");
+}
+
+const StyledPage = styled.div`
+  background-color: var(--base-300);
+  min-height: 100vh;
+`;
+
+import { useLoader } from "@/context/LoaderContext";
+
+// ...
+
+export default function HomePage() {
+  const { hasLoaded, setHasLoaded } = useLoader();
+  const homeRef = useRef<HomeHandle>(null);
+
+  const handleReveal = () => {
+    if (homeRef.current) {
+      homeRef.current.reveal();
+    }
+  };
+
+  const handleLoaderComplete = () => {
+    setHasLoaded(true);
+  };
+
+  // If already loaded, we don't show loader.
+  // But we might need to "reveal" the home components immediately? 
+  // Actually Home components are static now (per previous request). 
+  // So no reveal needed if no loader.
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.tsx file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+    <StyledPage>
+      {!hasLoaded && (
+        <Loader onReveal={handleReveal} onComplete={handleLoaderComplete} />
+      )}
+      <Home ref={homeRef} />
+      <FolderGallery />
+    </StyledPage>
   );
 }
